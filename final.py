@@ -2,31 +2,32 @@
 #video -> frame extraction -> enhancement -> model
 
 #frames extraction parameters (video_file_path, output_frames_folder, optional_frame_interval(60))
-from CNN.imageClassification.video import extract_frames
+from CNN.video import extract_frames
 import os
 
-video_parent_dir = 'C:/Users/svish/Underwater_Repair_Bot/ML/video'
-output_frames_folder = 'C:/Users/svish/Underwater_Repair_Bot/ML/frames'
+video_parent_dir = 'video/'
+output_frames_folder = 'frames'
 optional_frame_interval = 60
 x = os.listdir(video_parent_dir)
 video_file_path = video_parent_dir + x[0]
 
 extract_frames(video_file_path, output_frames_folder, optional_frame_interval)
-print("EXTRACTION OF FRAMES COMPLETED SUCCESSFULLY")
+print("\n\nEXTRACTION OF FRAMES COMPLETED SUCCESSFULLY\n\n")
 
 #enhancement paramenters (script_path, input_file_path, output_file_fath)
 import subprocess
 
-script_path = 'C:/Users/svish/Underwater_Repair_Bot/ML/enhancement/finalEnhancer.py'
-input_file_path = 'C:/Users/svish/Underwater_Repair_Bot/ML/frames'
-output_file_fath = 'C:/Users/svish/Underwater_Repair_Bot/ML/images'
-weights = 'C:/Users/svish/Underwater_Repair_Bot/ML/enhancement/weights.pt'
+script_path = 'enhancement/finalEnhancer.py'
+input_file_path = 'frames'
+output_file_path = 'images'
+weights = 'enhancement/weights.pt'
 
-def enhancement(script_path, input_file_path, output_file_fath, weights):
+def enhancement(script_path, input_file_path, output_file_path, weights):
+
     command = [
     'python', script_path,
     '--source', input_file_path,
-    '--name', output_file_fath,
+    '--name', output_file_path,
     '--weights', weights
 ]
 
@@ -37,16 +38,16 @@ def enhancement(script_path, input_file_path, output_file_fath, weights):
         print(f"An error occurred: {e}")
         print("Command output (if available):", e.output)
 
-enhancement(script_path, input_file_path, output_file_fath, weights)
+enhancement(script_path, input_file_path, output_file_path, weights)
 print("ENHANCEMENT OF IMAGES COMPLETED SUCCESSFULLY")
 
 
 
 #crack detection model parameters (model_path, imgs_path)
-from CNN.imageClassification.test import crack_detection
+from CNN.test import crack_detection
 
-model_path = 'C:/Users/svish/Underwater_Repair_Bot/ML/CNN/imageClassification/models/imageclassifier.h5'
-image_path = 'C:/Users/svish/Underwater_Repair_Bot/ML/images/'  
+model_path = 'CNN/models/imageclassifier.h5'
+image_path = 'enhancement/output/images/'  
 #include '/' at the end of image path sd os.listdir() does not
 
 crack_detection(model_path, image_path)

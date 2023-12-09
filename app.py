@@ -1,6 +1,6 @@
 from flask import Flask, render_template
-from CNN.imageClassification.video import extract_frames
-from CNN.imageClassification.test import crack_detection
+from CNN.video import extract_frames
+from CNN.test import crack_detection
 import subprocess
 import os
 
@@ -9,8 +9,8 @@ app = Flask(__name__)
 # Video frame extraction route
 @app.route('/extract_frames')
 def extract_video_frames():
-    video_parent_dir = 'path/to/video_folder'
-    output_frames_folder = 'path/to/output_frames_folder'
+    video_parent_dir = 'video/'
+    output_frames_folder = 'frames'
     optional_frame_interval = 60
 
     # Perform frame extraction
@@ -31,10 +31,10 @@ def extract_video_frames():
 @app.route('/enhance')
 def enhance_images():
     # Define enhancement parameters
-    script_path = 'path/to/enhancement_script.py'
-    input_file_path = 'path/to/frames_folder'
-    output_file_path = 'path/to/output_enhanced_images'
-    weights = 'path/to/weights.pt'
+    script_path = 'enhancement/finalEnhancer.py'
+    input_file_path = 'frames'
+    output_file_path = 'images'
+    weights = 'enhancement/weights.pt'
 
     # Perform enhancement
     # Execute enhancement using subprocess module
@@ -57,8 +57,8 @@ def enhance_images():
 @app.route('/detect_cracks')
 def detect_cracks():
     # Define crack detection model parameters
-    model_path = 'path/to/model.h5'
-    image_path = 'path/to/enhanced_images_folder/'
+    model_path = 'CNN/models/imageclassifier.h5'
+    image_path = 'enhancement/output/images/'
 
     # Perform crack detection
     # Call the function for crack detection on enhanced images
