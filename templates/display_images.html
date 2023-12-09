@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cracked Images</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        h1 {
+            color: #8ab8ff; /* Water blue color */
+        }
+        img {
+            border: 2px solid #8ab8ff; /* Water blue border for images */
+            margin: 10px;
+            box-shadow: 0px 0px 10px #8ab8ff; /* Water blue shadow */
+        }
+        /* Add specific styling for cracked images or specific classes if needed */
+        /* Example: */
+        /* .cracked-image {
+            /* Your custom styling for cracked images */
+        /* } */
+    </style>
+</head>
+<body>
+    <h1>Cracked Images</h1>
+    <div>
+        {% for image in images %}
+            <img src="{{ url_for('static', filename=image) }}" alt="Cracked Image">
+        {% endfor %}
+    </div>
+</body>
+</html>

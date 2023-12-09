@@ -2,7 +2,7 @@
 #video -> frame extraction -> enhancement -> model
 
 #frames extraction parameters (video_file_path, output_frames_folder, optional_frame_interval(60))
-from CNN.video import extract_frames
+from scripts.video import extract_frames
 import os
 
 video_parent_dir = 'video/'
@@ -44,7 +44,7 @@ print("ENHANCEMENT OF IMAGES COMPLETED SUCCESSFULLY")
 
 
 #crack detection model parameters (model_path, imgs_path)
-from CNN.test import crack_detection
+from data.test import crack_detection
 
 model_path = 'CNN/models/imageclassifier.h5'
 image_path = 'enhancement/output/images/'  

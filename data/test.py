@@ -5,8 +5,8 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 
-model_path = 'C:/Users/svish/SIH/CNN/imageClassification/models/imageclassifier.h5'
-image_path = 'C:/Users/svish/SIH/images/'
+model_path = 'CNN/models/imageclassifier.h5'
+image_path = 'enhancement\output\images'
 
 
 
