@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Image Processing Results</title>
-    <link rel="stylesheet" >
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<style>
+<STYLE>
     body {
     background-color: #222;
     color: #fff;
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
     width: 80%;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 20px;
+    background-color: #333;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 h1, h2 {
@@ -38,7 +43,7 @@ h1, h2 {
     border-radius: 5px;
 }
 
-</style>
+</STYLE>
 <body>
     <div class="container">
         <h1>Image Processing Results</h1>
