@@ -7,6 +7,7 @@ import numpy as np
 import torch
 from data import transform
 from net import Enhancer
+
 # Config ------
 
 wd = Path(__file__).parent.resolve()  # repo root

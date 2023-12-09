@@ -1,9 +1,9 @@
 import os
 from flask import Flask, render_template
-from data.test import crack_detection
+from script.test import crack_detection
 from final import enhancement
-from models.net import Enhancer
-from scripts.video import extract_frames
+from enhancement.net import Enhancer
+from script.video import extract_frames
 
 app = Flask(__name__)
 
