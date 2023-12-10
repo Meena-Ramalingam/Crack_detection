@@ -8,7 +8,7 @@ import os
 
 video_parent_dir = 'video/'
 output_frames_folder = 'frames'
-optional_frame_interval = 60
+optional_frame_interval = 30
 x = os.listdir(video_parent_dir)
 video_file_path = video_parent_dir + x[0]
 
@@ -51,4 +51,4 @@ model_path = 'CNN/models/imageclassifier.h5'
 image_path = 'enhancement/output/images/'  
 #include '/' at the end of image path sd os.listdir() does not
 
-crack_detection(model_path, image_path)
+crack_detection(model_path,image_path)
