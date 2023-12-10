@@ -5,7 +5,7 @@ from keras.layers import Conv2D, MaxPooling2D, Dense, Flatten
 from keras.metrics import Precision, Recall, BinaryAccuracy
 
 # Load dataset using tf.keras.utils.image_dataset_from_directory
-data = tf.keras.utils.image_dataset_from_directory('CNN/logs/train')
+data = tf.keras.utils.image_dataset_from_directory('CNN\models\imageclassifier.h5')
 data = data.map(lambda x, y: (x / 255, y))
 
 # Split the dataset into train, validation, and test sets
