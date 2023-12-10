@@ -12,6 +12,7 @@ image_path = 'enhancement/output/images'
 
 def crack_detection(model_path,img_path,predictions=[]):
     model = load_model(model_path)
+    images_with_cracks = []
     for x in os.listdir(img_path):
         path = img_path + x
         img = cv2.imread(path)
@@ -21,9 +22,9 @@ def crack_detection(model_path,img_path,predictions=[]):
 
     for i in range(len(predictions)):
         if predictions[i] >=0.5:
-            print(f'CRACK IN IMAGE {i+1}')
+            images_with_cracks.append(path)
         
-    
+    return images_with_cracks
     
 
 #print(crack_detection(model_path, image_path))
