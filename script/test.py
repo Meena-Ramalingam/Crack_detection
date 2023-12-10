@@ -20,7 +20,7 @@ def crack_detection(model_path,img_path,predictions=[]):
         predictions.append(pred)
 
     for i in range(len(predictions)):
-        if predictions[i] >=0.6:
+        if predictions[i] >=0.5:
             print(f'CRACK IN IMAGE {i+1}')
         
     

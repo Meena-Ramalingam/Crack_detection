@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Crack Detection</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!-- Other CSS files or custom styles -->
+    </head>
+    
+<body>
+    <div class="container">
+        <h1 class="mt-4 mb-4">Crack Detection Results</h1>
+
+        <div class="row">
+            {% for image in images %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ image }}" class="card-img-top" alt="Crack Detected">
+                        <div class="card-body">
+                            <p class="card-text">Image with detected cracks</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Other JS files or custom scripts -->
+</body>
+
+</html>
