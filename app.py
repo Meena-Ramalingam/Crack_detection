@@ -4,7 +4,8 @@
 #frames extraction parameters (video_file_path, output_frames_folder, optional_frame_interval(60))
 from script.video import extract_frames
 
-#app part
+#app part :as app.py can be the only that runs all the backend process in one and we want to display the images from here ,we are placing all the function in here
+
 from flask import Flask, render_template
 from script.test import crack_detection
 import cv2
