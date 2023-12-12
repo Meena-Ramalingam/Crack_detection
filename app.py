@@ -60,14 +60,16 @@ print("ENHANCEMENT OF IMAGES COMPLETED SUCCESSFULLY")
 # #include '/' at the end of image path sd os.listdir() does not
 
 # crack_detection(model_path,image_path)
+model_path = 'CNN/models/newmodel.h5'
+image_path = 'enhancement/output/images'
+
+crack_detected_image_paths = crack_detection(model_path, image_path)
 
 @app.route('/')
 def index():
-    model_path = 'CNN/models/imageclassifier.h5'
-    image_path = 'enhancement/output/images'
-
+    
     # Call crack_detection function to get images with cracks
-    crack_detected_image_paths = crack_detection(model_path, image_path)
+    
 
     # Convert image paths into actual images
     crack_detected_images = []

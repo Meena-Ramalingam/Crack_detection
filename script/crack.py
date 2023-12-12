@@ -56,3 +56,5 @@ for batch in test.as_numpy_iterator():
 
 # Print evaluation results
 print(pre.result(), re.result(), acc.result())
+
+model.save('newmodel.h5')
