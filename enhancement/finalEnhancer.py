@@ -18,7 +18,7 @@ VID_SUFFIXES = [".mp4", ".mpeg", ".avi"]
 IM_SUFFIXES = [".bmp", ".jpg", ".jpeg", ".png", ".gif"]
 
 # Dropbox URLs just need dl=1 to ensure direct download link
-default_ckpt_url = "https://www.dropbox.com/s/j8ida1d86hy5tm4/waternet_exported_state_dict-daa0ee.pt?dl=1"
+#default_ckpt_url = "https://www.dropbox.com/s/j8ida1d86hy5tm4/lakenet_exported_state_dict-daa0ee.pt?dl=1"
 
 # Util fxns ------
 

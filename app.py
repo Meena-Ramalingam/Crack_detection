@@ -1,88 +1,138 @@
-#process:
-#video -> frame extraction -> enhancement -> model
+# from flask import Flask, render_template,request,jsonify
+# # from script.test import crack_detection
+# import cv2
+# import os
 
-#frames extraction parameters (video_file_path, output_frames_folder, optional_frame_interval(60))
-from script.video import extract_frames
+# app = Flask(__name__)
 
-#app part :as app.py can be the only that runs all the backend process in one and we want to display the images from here ,we are placing all the function in here
+# @app.route('/')
+# def index():
+    
+#     return render_template('display_images.html')
 
-from flask import Flask, render_template
-from script.test import crack_detection
-import cv2
+# @app.route('/saveVideo', methods=['POST'])
+# def save_video():
+#     if 'video' not in request.files:
+#         return jsonify({'error': 'No video found'}), 400
+    
+#     video = request.files['video']
+#     video.save('video/recorded_video.webm')
+#     video.save('history/recorded_video.webm')
+    
+#     return jsonify({'message': 'File saved successfully'}), 200
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
+
+
+# from flask import Flask, render_template, request, jsonify
+# import os
+# import uuid  # Python library for generating unique IDs
+# from script.video import extract_frames
+# import cv2
+# import opencv
+
+# app = Flask(__name__)
+
+# @app.route('/')
+# def index():
+#     return render_template('display_images.html')
+
+# @app.route('/saveVideo', methods=['POST'])
+# def save_video():
+#     if 'video' not in request.files:
+#         return jsonify({'error': 'No video found'}), 400
+    
+#     video = request.files['video']
+    
+#     # Generate a unique filename for the history directory
+#     unique_filename = str(uuid.uuid4()) + '.webm'
+
+#     history_path = os.path.join('history', unique_filename)
+#     video.save(history_path)
+
+#     # Replace the existing file in the video directory with the new one
+#     video_path ='video/recorded_video.webm'
+
+#     if os.path.exists(video_path):
+#         os.remove(video_path)
+#     video.save(video_path)
+
+#     # video_file_path = 'video/recorded_video.webm'
+
+#     # output_frames_folder = 'raw_imgs'
+#     # frame_interval = 30  # Change this value to save every 100th or 200th frame
+#     # extract_frames(video_file_path, output_frames_folder, frame_interval)
+
+
+#     return jsonify({'message': 'File saved successfully'}), 200
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
+
+
+from flask import Flask, request, jsonify,render_template, request, jsonify
 import os
+import uuid
+import cv2
+
+import backend
+
 
 app = Flask(__name__)
-#app part imports
-
-video_parent_dir = 'video/'
-output_frames_folder = 'frames'
-optional_frame_interval = 30
-x = os.listdir(video_parent_dir)
-video_file_path = video_parent_dir + x[0]
-
-extract_frames(video_file_path, output_frames_folder, optional_frame_interval)
-print("\n\nEXTRACTION OF FRAMES COMPLETED SUCCESSFULLY\n\n")
-
-#enhancement paramenters (script_path, input_file_path, output_file_fath)
-import subprocess
-
-script_path = 'enhancement/finalEnhancer.py'
-input_file_path = 'frames'
-output_file_path = 'images'
-weights = 'enhancement/weights.pt'
-
-def enhancement(script_path, input_file_path, output_file_path, weights):
-
-    command = [
-    'python', script_path,
-    '--source', input_file_path,
-    '--name', output_file_path,
-    '--weights', weights
-]
-
-    try:
-        result = subprocess.run(command, check=True, capture_output=True, text=True)
-        print("Command output:", result.stdout)
-    except subprocess.CalledProcessError as e:
-        print(f"An error occurred: {e}")
-        print("Command output (if available):", e.output)
-
-enhancement(script_path, input_file_path, output_file_path, weights)
-print("ENHANCEMENT OF IMAGES COMPLETED SUCCESSFULLY")
-
-
-
-# #crack detection model parameters (model_path, imgs_path)
-# from script.test import crack_detection
-
-# model_path = 'CNN/models/imageclassifier.h5'
-# image_path = 'enhancement/output/images/'  
-# #include '/' at the end of image path sd os.listdir() does not
-
-# crack_detection(model_path,image_path)
-model_path = 'CNN/models/newmodel.h5'
-image_path = 'enhancement/output/images'
-
-crack_detected_image_paths = crack_detection(model_path, image_path)
 
 @app.route('/')
 def index():
+    return render_template('display_images.html')
+
+@app.route('/saveVideo', methods=['POST'])
+def save_video():
+    if 'video' not in request.files:
+        return jsonify({'error': 'No video found'}), 400
     
-    # Call crack_detection function to get images with cracks
+    video = request.files['video']
+    
+    # Generate a unique filename for the history directory
+    unique_filename = str(uuid.uuid4()) + '.webm'
+
+    history_path = os.path.join('history/', unique_filename)
+    video.save(history_path)
+    
+    # Replace the existing file in the video directory with the new one
+    video_path = 'video/recorded_video.webm'
+
+    if os.path.exists(video_path):
+        os.remove(video_path)
+    video.save(video_path)
+
+    return jsonify({'message': 'Files saved successfully'}), 200
+
+@app.route('/saveVideoToVideoFolder', methods=['POST'])
+def save_video_to_video_folder():
+    if 'video' not in request.files:
+        return jsonify({'error': 'No video found'}), 400
+    
+    video = request.files['video']
+
+    video_path ='video/recorded_video.webm'
+    
+    if os.path.exists(video_path):
+        os.remove(video_path)
+    video.save(video_path)
+
+    backend.frame_extraction()
+    backend.enhancement()
+    l1 = backend.crack_processing()
+    print(l1)
+
+
     
 
-    # Convert image paths into actual images
-    crack_detected_images = []
-    for image_path in crack_detected_image_paths:
-        img = cv2.imread(image_path)
-        # Convert BGR to RGB if needed
-        # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        crack_detected_images.append(img)
-
-    # Render HTML template and pass the detected images to the frontend
-    return render_template('index.html', images=crack_detected_images)
 
 
+
+
+    return jsonify({'message': 'File saved in video folder successfully'}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)

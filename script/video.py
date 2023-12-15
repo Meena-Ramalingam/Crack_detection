@@ -1,33 +1,37 @@
 import cv2
 import os
-import shutil
 
 def extract_frames(video_path, output_folder, frame_interval=60):
-    # Create the output folder if it doesn't exist
-    if os.path.exists(output_folder):
-        shutil.rmtree(output_folder)
-    os.makedirs(output_folder)
+    # Create output folder if it doesn't exist
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
 
     # Open the video file
-    video_capture = cv2.VideoCapture(video_path)
-    success, image = video_capture.read()
-    count = 0
+    cap = cv2.VideoCapture(video_path)
+    frame_count = 0
+    extracted_count = 0
 
-    # Read frames until there are no more frames
-    while success:
-        if count % frame_interval == 0:
-            # Save frame as a PNG file
-            frame_path = os.path.join(output_folder, f"frame_{count:04d}.png")
-            cv2.imwrite(frame_path, image)
+    # Loop through the video and extract frames at the specified interval
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
 
-        success, image = video_capture.read()
-        count += 1
+        # Extract frames at the specified interval
+        if frame_count % frame_interval == 0:
+            # Save frame as PNG with frame number in the filename
+            frame_name = f"frame_{frame_count:08d}.png"
+            frame_path = os.path.join(output_folder, frame_name)
+            cv2.imwrite(frame_path, frame)
+            extracted_count += 1
 
-    video_capture.release()
+        frame_count += 1
 
-# Example usage:
-#video_file_path = 'video/vid.mp4'
-#output_frames_folder = 'raw_imgs'
-#frame_interval = 30  # Change this value to save every 100th or 200th frame
+    cap.release()
+    print(f"{extracted_count} frames extracted successfully.")
 
-#extract_frames(video_file_path, output_frames_folder, frame_interval)
+# # Provide the path to your .webm video file and output folder
+# video_file_path = 'video/recorded_video.webm'
+# output_folder_path = 'frames'
+
+# extract_frames(video_file_path, output_folder_path, frame_interval=60)
